@@ -1,14 +1,11 @@
 # ==== Backend ====
-# Pinned versions to ensure reproducible installs. Update intentionally and test before changing.
-fastapi==0.95.2
-uvicorn==0.21.1
-pandas==2.1.2
-numpy==1.24.4
+fastapi
+uvicorn
+pandas
+numpy
 
 # ==== Frontend ====
-streamlit==1.20.0
-requests==2.31.0
-plotly==5.15.0
+streamlit
+requests
+plotly
 
-# ==== Utilidades opcionales ====
-# python-dotenv==1.0.0   # (si deseas manejar variables de entorno, ej. URL del backend)
