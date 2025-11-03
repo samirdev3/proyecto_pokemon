@@ -1,0 +1,67 @@
+📂 Estructura de proyecto
+app/
+├── backend.py   # FastAPI
+├── frontend.py  # Streamlit
+
+🚀 Código de backend.py (FastAPI)
+from fastapi import FastAPI
+from pydantic import BaseModel
+
+app = FastAPI()
+
+# Modelo de entrada
+class Item(BaseModel):
+    nombre: str
+    cantidad: int
+
+@app.get("/")
+def root():
+    return {"mensaje": "API con FastAPI funcionando 🚀"}
+
+@app.post("/procesar/")
+def procesar_item(item: Item):
+    resultado = {
+        "descripcion": f"Producto: {item.nombre}",
+        "total": item.cantidad * 10  # Simulamos un cálculo
+    }
+    return resultado
+
+
+Ejecuta el backend con:
+
+uvicorn backend:app --reload
+
+🎨 Código de frontend.py (Streamlit)
+import streamlit as st
+import requests
+
+st.title("Demo Streamlit + FastAPI 🚀")
+
+# Entrada de datos
+nombre = st.text_input("Nombre del producto")
+cantidad = st.number_input("Cantidad", min_value=1, step=1)
+
+if st.button("Enviar a API"):
+    payload = {"nombre": nombre, "cantidad": cantidad}
+    try:
+        response = requests.post("http://127.0.0.1:8000/procesar/", json=payload)
+        if response.status_code == 200:
+            data = response.json()
+            st.success(f"{data['descripcion']} - Total: {data['total']}")
+        else:
+            st.error("Error en la API")
+    except Exception as e:
+        st.error(f"No se pudo conectar con la API: {e}")
+
+
+Ejecuta el frontend con:
+
+streamlit run frontend.py
+
+🔗 Flujo
+
+Levantas el backend con uvicorn en el puerto 8000.
+
+Abres el frontend con streamlit, rellenas el formulario y este hace POST a FastAPI.
+
+Te devuelve el resultado procesado y lo ves en la web de Streamlit.
